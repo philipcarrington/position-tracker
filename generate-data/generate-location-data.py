@@ -3,6 +3,9 @@
 import csv
 import string
 import random
+from json import loads, dumps
+from collections import OrderedDict
+
 
 def get_location_data(output_flie_path,
                       mobile_no,
@@ -16,29 +19,41 @@ def get_location_data(output_flie_path,
         print('The chosen letter is: {} and of type: {}'.format(chosen_letter, type(chosen_letter)))
 
     # Read the postcode file into a dictionary:
-    input_file = csv.DictReader(open("/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/external-data/ukpostcodes.csv"))
+    input_file = csv.DictReader(open("/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/"
+                                     "external-data/ukpostcodes.csv"))
 
-    # print(type(input_file))
-    # print(input_file)
+    # Covert the ordered dict to dict:
+    # postcodes = loads(dumps(input_file))
+    # Get all the postcodes that have a postcode of the chosen_letter
+    choosen_letter_postcodes = {}
+
+    for row in input_file:
+        postcode = (row["postcode"])
+        if debug == 1:
+            print('The postcode is: {} and the first letter: {} of type: {} and the chossen letter is: {}'.format(
+                postcode, postcode[0], type(postcode[0]), chosen_letter))
+
+        if postcode[0] in chosen_letter:
+            choosen_letter_postcodes[row]
+            if debug == 1:
+                print(choosen_letter_postcodes)
+
+    print(choosen_letter_postcodes)
+    print(type(choosen_letter_postcodes))
+
+    for choosen_letters_postcode_row in choosen_letter_postcodes:
+        print(choosen_letters_postcode_row)
 
     # Reset the points counter
     returned_points = 0
 
-    for row in input_file:
-        postcode = (row["postcode"])
-        # print('The postcode is: {} and the first letter: {} of type: {}'.format(postcode, postcode[0], type(postcode[0])))
-        while returned_points <= no_of_points:
-            if postcode[0] == chosen_letter:
-                print('+++++++ Row chosen +++++')
-                print(row)
-            returned_points = returned_points + 1
 
 #####################################################
 # Run the Job:
 
 
 if __name__ == "__main__":
-    get_location_data(None, None, 11, 1)
+    get_location_data(None, None, 11, 0)
 
 
 
