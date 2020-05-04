@@ -74,7 +74,7 @@ def get_location_data(
     lowest_random_value = get_chosen_lowest_id(chosen_postcodes)
     highest_random_value = get_chosen_highest_id(chosen_postcodes)
 
-    while returned_points <= no_of_points:
+    while returned_points < no_of_points:
         # Generate random value:
         random_key_value = int(random.uniform(int(lowest_random_value), int(highest_random_value)))
 
@@ -87,20 +87,23 @@ def get_location_data(
     # Get the points:
     # Create the return dict:
     location_tracking_data = {}
+    return_data_list = []
 
     # Loop through the list to get the random postcodes:
     for key_point in keys_to_fetch:
         for unique_id, unique_id_data in chosen_postcodes.items():
             if int(unique_id) == key_point:
-                location_tracking_data[unique_id] = unique_id_data
+                return_data_list_items = [unique_id_data[0], float(unique_id_data[1]), float(unique_id_data[2])]
 
-    print(location_tracking_data)
+                return_data_list.append(return_data_list_items)
+
+    return return_data_list
 
 
 #####################################################
 # Run the Job:
-if __name__ == "__main__":
-    get_location_data(11, 0)
+# if __name__ == "__main__":
+#    get_location_data(11, 0)
 
 
 

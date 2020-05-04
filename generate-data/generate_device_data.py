@@ -18,7 +18,3 @@ def get_mobile_no():
         device_number_counter = device_number_counter + 1
 
     return mobile_no
-#####################################################
-# Run the Job:
-if __name__ == "__main__":
-    print(get_mobile_no())
