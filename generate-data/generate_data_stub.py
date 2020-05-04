@@ -1,15 +1,18 @@
 from generate_location_data import *
 from generate_temp_data import *
 from generate_device_data import *
+from generate_time_data import *
 
 import json
+import os
+import datetime
 
 
-def get_configs_dir_location():
+def get_data_dir_location():
     # Current Dir:
     current_dir = os.path.dirname(__file__)
     # Config files location:
-    return os.path.join(current_dir, 'configs')
+    return os.path.join(current_dir, 'generated_data')
 
 
 def generate_data_stub(no_of_devices, no_of_points_per_device):
@@ -29,27 +32,31 @@ def generate_data_stub(no_of_devices, no_of_points_per_device):
     device_data_dict = {}
     device_count_no = 0
 
-    # print(device_numbers_list)
-    # print(device_numbers_list.__len__())
-
     filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/' \
                'generated-data/out.json'
 
     f = open(filename, "w")
 
     for device in device_numbers_list:
+        # Get the location list:
+        location_list = get_location_data(no_of_points_per_device, 0)
+        # Get the device temps:
+        temps_list = get_temperature(no_of_points_per_device)
+        # Get the times list:
+        start_date = datetime.datetime(2020, 9, 20, 13, 00)
+        times_list = list(get_random_datetime(start_date, no_of_points_per_device))
 
-        device_data_dict[device] = {}
+        for time, location, temp in zip(times_list, location_list, temps_list):
+            device_data_dict['mobile_no'] = device
+            device_data_dict['reading_time'] = time
+            device_data_dict['postcode'] = location[0]
+            device_data_dict['lat'] = location[1]
+            device_data_dict['long'] = location[2]
+            device_data_dict['temperature'] = temp
 
-        # Get the devices location:
-        device_data_dict[device]["location_data"] = get_location_data(no_of_points_per_device,0)
+            json_data = (json.dumps(device_data_dict, sort_keys=True, default=str))
 
-        # Get device temps:
-        device_data_dict[device]["temp_data"] = get_temperature(no_of_points_per_device)
-
-        json_data = (json.dumps(device_data_dict))
-
-        f.write(json_data + '\n')
+            f.write(json_data + '\n')
 
     f.close()
 
@@ -57,4 +64,4 @@ def generate_data_stub(no_of_devices, no_of_points_per_device):
 #####################################################
 # Run the Job:
 if __name__ == "__main__":
-    generate_data_stub(3, 10)
+    generate_data_stub(3, 20)
