@@ -4,8 +4,8 @@ import random
 
 def get_postcode_letter(debug):
     # Choose a letter to read:
-    choose_letters = 'A' #BCDEFGHIJKLMNOPQRSTUVWXYZ'
-    chosen_letter = random.choice(choose_letters)
+    choose_letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    chosen_letter = random.choice(choose_letter)
 
     if debug == 1:
         print('The chosen letter is: {} and of type: {}'.format(chosen_letter, type(chosen_letter)))
@@ -41,7 +41,7 @@ def get_location_data(
 
     # TODO: Pass the properly with relative file name etc:
     filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/' \
-               'external-data/ukpostcodes-head.csv'
+               'external-data/ukpostcodes.csv'
 
     # Choose a letter to read:
     chosen_letter = get_postcode_letter(debug)
@@ -79,10 +79,13 @@ def get_location_data(
         random_key_value = int(random.uniform(int(lowest_random_value), int(highest_random_value)))
 
         # Add to the list:
-        keys_to_fetch.append(random_key_value)
-
-        # Inc the counter:
-        returned_points = returned_points + 1
+        if random_key_value in keys_to_fetch:
+            returned_points = returned_points
+        else:
+            # Add the key:
+            keys_to_fetch.append(random_key_value)
+            # Inc the counter:
+            returned_points = returned_points + 1
 
     # Get the points:
     # Create the return dict:
@@ -90,13 +93,17 @@ def get_location_data(
     return_data_list = []
 
     # Loop through the list to get the random postcodes:
+    point_count = 0
     for key_point in keys_to_fetch:
+        point_count = point_count + 1
         for unique_id, unique_id_data in chosen_postcodes.items():
             if int(unique_id) == key_point:
-                return_data_list_items = [unique_id_data[0], float(unique_id_data[1]), float(unique_id_data[2])]
-
+                print(int(unique_id))
+                print(key_point)
+                return_data_list_items = [unique_id, unique_id_data[0], float(unique_id_data[1]), float(unique_id_data[2])]
+                print(return_data_list_items)
                 return_data_list.append(return_data_list_items)
-
+    print(point_count)
     return return_data_list
 
 
