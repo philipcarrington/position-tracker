@@ -7,12 +7,9 @@ import json
 import os
 
 
-def get_data_dir_location():
+def get_dir_location():
     # Current Dir:
-    current_dir = os.path.dirname(__file__)
-    # Config files location:
-    return os.path.join(current_dir)
-
+    return os.path.dirname(os.path.realpath(__file__))
 
 # Takes the input file and crates a processed file:
 def read_input_file_to_dict(input_file, output_file, debug):
@@ -210,23 +207,33 @@ def generate_data_stub(
         no_of_data_points
 ):
     # Get the current filepath:
-    current_file_path = get_data_dir_location()
-    print(current_file_path)
+    current_file_path = get_dir_location()
+
+    # Create the data paths:
+    data_path = '{}/{}'.format(current_file_path, 'data')
+    external_data_path = '{}/{}'.format(data_path, 'external')
+    processed_data_path = '{}/{}'.format(data_path, 'processed')
+    generated_data_path = '{}/{}'.format(data_path, 'generated')
+
+    # Create the file paths:
+    postcodes_file = '{}/{}'.format(external_data_path, 'ukpostcodes.csv')
+    processed_postcodes = '{}/{}'.format(processed_data_path, 'ukpostcodes.json')
+    iot_data = '{}/{}'.format(generated_data_path, 'iot_data.json')
 
 
     # TODO: Pass the properly with relative file name etc:
-    filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/' \
-               'external-data/ukpostcodes.csv'
-    processed_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data' \
-                         '/locations-processed.json'
-    out_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data/' \
-                   'locations-out.json'
+    # filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/' \
+    #            'external-data/ukpostcodes.csv'
+    # processed_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data' \
+    #                     '/locations-processed.json'
+    # out_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data/' \
+    #                'locations-out.json'
 
     # Read the postcode file into a dictionary and a file for process debug:
-    read_input_file_to_dict(filename, processed_filename, 0)
+    read_input_file_to_dict(postcodes_file, processed_postcodes, 0)
 
     # Get the min and max ids of the postcodes from the file
-    postcodes_min_max_ids = get_postcodes_min_max_id(processed_filename)
+    postcodes_min_max_ids = get_postcodes_min_max_id(processed_postcodes)
 
     # Generate a device numbers list:
     device_numbers = get_device_numbers(no_of_devices)
@@ -243,10 +250,10 @@ def generate_data_stub(
         location_ids = get_location_data_ids(min_postcode_id, max_postcode_id, no_of_data_points)
 
         # Get the location ids:
-        location_data = get_location_data(mobile_no, location_ids, processed_filename)
+        location_data = get_location_data(mobile_no, location_ids, processed_postcodes)
 
         # Write the data to the file
-        write_locations_data_to_file(out_filename, location_data, no_of_mobile_nos)
+        write_locations_data_to_file(iot_data, location_data, no_of_mobile_nos)
         no_of_mobile_nos = no_of_mobile_nos + 1
 #####################################################
 # Run the Job:
