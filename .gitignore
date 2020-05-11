@@ -1,5 +1,7 @@
 # Project files
-/data/*
+/data/external/*
+/data/generated/*
+/data/processed/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
