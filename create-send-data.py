@@ -203,8 +203,8 @@ def main():
     ########################################### NEW I AM PUTTING IN ####################################################
     # Generate the data:
     generate_device_data(
-        args.no_of_devices,
-        args.no_of_points_per_device,
+        int(args.no_of_devices),
+        int(args.no_of_points_per_device),
         args.filename
     )
 
@@ -212,7 +212,7 @@ def main():
     current_file_path = get_dir_location()
 
     # Create the data paths:
-    data_path = '{}/{}'.format(current_file_path, 'data')
+    data_path = '{}/{}'.format(current_file_path, 'generate_data/data')
     generated_data_path = '{}/{}'.format(data_path, 'generated')
 
     # Create the file paths:
