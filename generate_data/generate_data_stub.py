@@ -203,7 +203,7 @@ def write_locations_data_to_file(out_filename, location_data, no_of_mobile_nos):
     out_file.close()
 
 
-def generate_data_stub(
+def generate_device_data(
         no_of_devices,
         no_of_data_points,
         out_file_name
@@ -251,4 +251,4 @@ def generate_data_stub(
 #####################################################
 # Run the Job:
 if __name__ == "__main__":
-    generate_data_stub(1, 100)
+    generate_device_data(20, 100)

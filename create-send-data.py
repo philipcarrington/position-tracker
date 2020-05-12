@@ -25,14 +25,12 @@ import argparse
 import datetime
 import os
 import time
-import json
 
 import jwt
 import paho.mqtt.client as mqtt
 
-import random
+from generate_data.generate_data_stub import generate_device_data
 
-from generate-data import generate_data_stub
 
 def create_jwt(
         project_id,
@@ -91,9 +89,11 @@ def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
     print('on_publish')
 
+
 def get_dir_location():
     # Current Dir:
     return os.path.dirname(os.path.realpath(__file__))
+
 
 def parse_command_line_args():
     """Parse command line arguments."""
@@ -202,7 +202,7 @@ def main():
 
     ########################################### NEW I AM PUTTING IN ####################################################
     # Generate the data:
-    generate_data_stub(
+    generate_device_data(
         args.no_of_devices,
         args.no_of_points_per_device,
         args.filename
