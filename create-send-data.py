@@ -91,6 +91,9 @@ def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
     print('on_publish')
 
+def get_dir_location():
+    # Current Dir:
+    return os.path.dirname(os.path.realpath(__file__))
 
 def parse_command_line_args():
     """Parse command line arguments."""
@@ -205,8 +208,18 @@ def main():
         args.filename
     )
 
+    # Get the current filepath:
+    current_file_path = get_dir_location()
+
+    # Create the data paths:
+    data_path = '{}/{}'.format(current_file_path, 'data')
+    generated_data_path = '{}/{}'.format(data_path, 'generated')
+
+    # Create the file paths:
+    iot_data = '{}/{}'.format(generated_data_path, args.filename)
+
     # Read data from file:
-    data_file = open(args.filename, "r")
+    data_file = open(iot_data, "r")
 
     # Use the file to generate the data:
     for json_payload in data_file:

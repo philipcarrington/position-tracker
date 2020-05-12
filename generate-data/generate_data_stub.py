@@ -11,6 +11,7 @@ def get_dir_location():
     # Current Dir:
     return os.path.dirname(os.path.realpath(__file__))
 
+
 # Takes the input file and crates a processed file:
 def read_input_file_to_dict(input_file, output_file, debug):
     # Start the dict:
@@ -204,7 +205,8 @@ def write_locations_data_to_file(out_filename, location_data, no_of_mobile_nos):
 
 def generate_data_stub(
         no_of_devices,
-        no_of_data_points
+        no_of_data_points,
+        out_file_name
 ):
     # Get the current filepath:
     current_file_path = get_dir_location()
@@ -218,16 +220,7 @@ def generate_data_stub(
     # Create the file paths:
     postcodes_file = '{}/{}'.format(external_data_path, 'ukpostcodes.csv')
     processed_postcodes = '{}/{}'.format(processed_data_path, 'ukpostcodes.json')
-    iot_data = '{}/{}'.format(generated_data_path, 'iot_data.json')
-
-
-    # TODO: Pass the properly with relative file name etc:
-    # filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/' \
-    #            'external-data/ukpostcodes.csv'
-    # processed_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data' \
-    #                     '/locations-processed.json'
-    # out_filename = '/Users/philip.carrington/Documents/personal/github-repos/position-tracker/data/generated-data/' \
-    #                'locations-out.json'
+    iot_data = '{}/{}'.format(generated_data_path, out_file_name)
 
     # Read the postcode file into a dictionary and a file for process debug:
     read_input_file_to_dict(postcodes_file, processed_postcodes, 0)
