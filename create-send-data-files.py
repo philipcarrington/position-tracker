@@ -29,7 +29,7 @@ import time
 import jwt
 import paho.mqtt.client as mqtt
 
-from generate_data.generate_data_stub import generate_device_data
+from generate_data.generate_data_stub_files import generate_device_data
 
 
 def create_jwt(

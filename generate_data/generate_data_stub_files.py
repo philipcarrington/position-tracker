@@ -170,7 +170,7 @@ def get_location_data(mobile_no, location_ids, data_file):
                 # Add the mobile phone no:
                 chosen_data['mobile_no'] = mobile_no
                 # Add a Temp to the line:
-                chosen_data['temp'] = get_temperature()
+                chosen_data['temperature'] = get_temperature()
                 # Generate at time:
                 current = current + datetime.timedelta(minutes=randrange(10))
                 chosen_data['reading_time'] = current.strftime("%Y-%m-%dT%H:%M")
