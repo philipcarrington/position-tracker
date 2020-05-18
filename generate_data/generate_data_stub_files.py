@@ -122,7 +122,8 @@ def get_device_numbers(no_of_devices):
 # Choose a letter:
 def get_postcode_letter(debug):
     # Choose a letter to read:
-    choose_letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    # Q, V, X- Not present in file
+    choose_letter = 'ABCDEFGHIJKLMNOPRSTUWYZ'
     chosen_letter = random.choice(choose_letter)
 
     if debug == 1:
@@ -248,7 +249,9 @@ def generate_device_data(
         # Write the data to the file
         write_locations_data_to_file(iot_data, location_data, no_of_mobile_nos)
         no_of_mobile_nos = no_of_mobile_nos + 1
+
+
 #####################################################
 # Run the Job:
 if __name__ == "__main__":
-    generate_device_data(20, 100)
+    generate_device_data(20, 100, 'out-file.txt')

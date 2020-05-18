@@ -51,7 +51,8 @@ def get_device_numbers(no_of_devices):
 # Choose a letter:
 def get_postcode_letter(debug):
     # Choose a letter to read:
-    choose_letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    # Q, V, X- Not present in file
+    choose_letter = 'ABCDEFGHIJKLMNOPRSTUWYZ'
     chosen_letter = random.choice(choose_letter)
 
     if debug == 1:
@@ -67,7 +68,7 @@ def get_location_data_ids(min_id, max_id, no_of_points):
     # Start the list:
     ids_to_find = []
     while points_counter <= no_of_points:
-        new_id = int(random.uniform(int(min_id), int(max_id)))
+        new_id = random.uniform(int(min_id), int(max_id))
         if new_id not in ids_to_find:
             ids_to_find.append(new_id)
             points_counter = points_counter + 1
@@ -158,9 +159,6 @@ def generate_device_data(
     # Create a column of the first letter:
     postcodes_df['postcode_first_letter'] = postcodes_df['postcode'].str[0]
 
-    # Print out postcodes
-    # print(postcodes_df)
-
     # Get the Min and Max IDs for the
     min_pcode_id_sr = postcodes_df.groupby('postcode_first_letter', sort=True)['id'].min()
     max_pcode_id_sr = postcodes_df.groupby('postcode_first_letter', sort=True)['id'].max()
@@ -173,7 +171,7 @@ def generate_device_data(
     for mobile_no in device_numbers:
         # Generate the post code letter:
         chosen_letter = get_postcode_letter(0)
-        # print(chosen_letter)
+        print(chosen_letter)
 
         # Get the ids to find from the file:
         min_postcode_id = min_pcode_id_sr.get(key=chosen_letter)
@@ -192,4 +190,4 @@ def generate_device_data(
 #####################################################
 # Run the Job:
 if __name__ == "__main__":
-    generate_device_data(1000, 100, 'outkey.txt')
+    generate_device_data(20, 100, 'out-pandas.txt')
