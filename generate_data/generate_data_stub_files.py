@@ -122,7 +122,7 @@ def get_device_numbers(no_of_devices):
 # Choose a letter:
 def get_postcode_letter(debug):
     # Choose a letter to read:
-    choose_letter = 'A' # BCDEFGHIJKLMNOPQRSTUVWXYZ'
+    choose_letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     chosen_letter = random.choice(choose_letter)
 
     if debug == 1:
